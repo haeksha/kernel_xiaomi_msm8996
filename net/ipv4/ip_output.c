@@ -1522,7 +1522,7 @@ void ip_send_unicast_reply(struct sock *sk, struct sk_buff *skb,
 			   unsigned int len)
 {
 	struct ip_options_data replyopts;
-	struct ipcm_cookie ipc;
+	struct ipcm_cookie ipc = {0};
 	struct flowi4 fl4;
 	struct rtable *rt = skb_rtable(skb);
 	struct net *net = sock_net(sk);

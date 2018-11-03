@@ -2096,7 +2096,7 @@ static void smb1351_parallel_work(struct work_struct *work)
 	struct smb1351_charger *chip = container_of(work,
 		struct smb1351_charger, parallel.parallel_work.work);
 
-	int rc, pre_icl_ma, icl_ma, total_icl_ma = 0;
+	int rc, pre_icl_ma, icl_ma = 0, total_icl_ma = 0;
 
 	/* Get ICL twice with 500ms delays to check if ICl settled */
 	rc = smb1351_get_usb_chg_current(chip, &pre_icl_ma);
@@ -2734,7 +2734,7 @@ static void smb1351_chg_ctrl_in_jeita(struct smb1351_charger *chip)
 static void smb1351_chg_adc_notification(enum qpnp_tm_state state, void *ctx)
 {
 	struct smb1351_charger *chip = ctx;
-	struct battery_status *cur;
+	struct battery_status *cur = NULL;
 	int temp;
 
 	if (state >= ADC_TM_STATE_NUM) {
@@ -3135,7 +3135,7 @@ static int smb1351_usbin_ov_handler(struct smb1351_charger *chip, u8 status)
 	struct power_supply *parallel_psy = smb1351_get_parallel_slave(chip);
 	int health;
 	int rc;
-	u8 reg;
+	u8 reg = 0;
 
 	pr_debug("enter, status = %d\n", !!status);
 	rc = smb1351_read_reg(chip, IRQ_E_REG, &reg);

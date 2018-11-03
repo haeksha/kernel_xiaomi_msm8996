@@ -2923,7 +2923,7 @@ static int mass_storage_function_bind_config(struct android_usb_function *f,
 {
 	struct mass_storage_function_config *config = f->config;
 	int ret = 0;
-	int i;
+	int i = 0;
 	struct fsg_opts *fsg_opts;
 
 	config->f_ms = usb_get_function(config->f_ms_inst);

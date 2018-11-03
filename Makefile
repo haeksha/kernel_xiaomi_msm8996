@@ -388,6 +388,7 @@ KBUILD_CFLAGS   := -Werror -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -fno-strict-aliasing -fno-common \
 		   -Werror-implicit-function-declaration \
 		   -Wno-format-security \
+		   -fmerge-all-constants \
 		   -std=gnu89
 
 KBUILD_AFLAGS_KERNEL :=
@@ -637,6 +638,13 @@ KBUILD_CFLAGS	+= $(call cc-disable-warning, int-in-bool-context)
 KBUILD_CFLAGS	+= $(call cc-disable-warning, attribute-alias)
 KBUILD_CFLAGS	+= $(call cc-option,-fno-PIE)
 KBUILD_AFLAGS	+= $(call cc-option,-fno-PIE)
+
+# Needed to unbreak GCC 7.x and above
+KBUILD_CFLAGS	+= $(call cc-option,-fno-store-merging,)
+KBUILD_CFLAGS	+= $(call cc-disable-warning, stringop-overflow)
+KBUILD_CFLAGS	+= $(call cc-disable-warning,array-bounds)
+KBUILD_CFLAGS	+= $(call cc-disable-warning,nonnull)
+KBUILD_CFLAGS	+= $(call cc-disable-warning,memset-elt-size)
 
 ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
 KBUILD_CFLAGS	+= $(call cc-option,-Oz,-Os) $(call cc-disable-warning,maybe-uninitialized,)

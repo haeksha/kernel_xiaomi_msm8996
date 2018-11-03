@@ -3201,7 +3201,7 @@ static int estimate_battery_age(struct fg_chip *chip, int *actual_capacity)
 {
 	int64_t ocv_cutoff_new, ocv_cutoff_aged, temp_rs_to_rslow;
 	int64_t esr_actual, battery_esr, val;
-	int soc_cutoff_aged, soc_cutoff_new, rc;
+	int soc_cutoff_aged, soc_cutoff_new, rc = 0;
 	int battery_soc, unusable_soc, batt_temp;
 	u8 buffer[3];
 
@@ -3513,7 +3513,7 @@ static int fg_get_cc_soc(struct fg_chip *chip, int *cc_soc)
 
 static int fg_get_current_cc(struct fg_chip *chip)
 {
-	int cc_soc, rc;
+	int cc_soc = 0, rc;
 	int64_t current_capacity;
 
 	if (!(chip->wa_flag & USE_CC_SOC_REG))
@@ -4015,7 +4015,7 @@ static void status_change_work(struct work_struct *work)
 				struct fg_chip,
 				status_change_work);
 	unsigned long current_time = 0;
-	int cc_soc, batt_soc, rc, capacity = get_prop_capacity(chip);
+	int cc_soc = 0, batt_soc, rc, capacity = get_prop_capacity(chip);
 	bool batt_missing = is_battery_missing(chip);
 
 	if (batt_missing) {
@@ -8532,7 +8532,7 @@ out:
 static int fg_memif_init(struct fg_chip *chip)
 {
 	int rc;
-	u8 dig_major;
+	u8 dig_major = 0;
 
 	rc = fg_read(chip, chip->revision, chip->mem_base + DIG_MINOR, 4);
 	if (rc) {

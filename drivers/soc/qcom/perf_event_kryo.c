@@ -211,7 +211,7 @@ static void kryo_pmu_disable_event(struct hw_perf_event *hwc, int idx)
 	unsigned long flags;
 	u32 val = 0;
 	unsigned long ev_num;
-	struct kryo_evt evtinfo;
+	struct kryo_evt evtinfo = {0};
 	struct pmu_hw_events *events = cpu_pmu->get_hw_events();
 
 	/* Disable counter and interrupt */
@@ -246,7 +246,7 @@ static void kryo_pmu_enable_event(struct hw_perf_event *hwc, int idx)
 	unsigned long flags;
 	u32 val = 0;
 	unsigned long ev_num;
-	struct kryo_evt evtinfo;
+	struct kryo_evt evtinfo = {0};
 	unsigned long long prev_count = local64_read(&hwc->prev_count);
 	struct pmu_hw_events *events = cpu_pmu->get_hw_events();
 

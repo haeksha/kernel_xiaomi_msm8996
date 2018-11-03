@@ -507,7 +507,7 @@ static void *__smem_find(unsigned id, unsigned size_in, bool skip_init_check)
  */
 void *smem_find(unsigned id, unsigned size_in, unsigned to_proc, unsigned flags)
 {
-	unsigned size;
+	unsigned size = 0;
 	void *ptr;
 
 	SMEM_DBG("%s(%u, %u, %u, %u)\n", __func__, id, size_in, to_proc,

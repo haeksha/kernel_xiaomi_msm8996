@@ -918,7 +918,7 @@ int simple_set_acl(struct inode *inode, struct posix_acl *acl, int type)
 
 int simple_acl_create(struct inode *dir, struct inode *inode)
 {
-	struct posix_acl *default_acl, *acl;
+	struct posix_acl *default_acl = NULL, *acl = NULL;
 	int error;
 
 	error = posix_acl_create(dir, &inode->i_mode, &default_acl, &acl);

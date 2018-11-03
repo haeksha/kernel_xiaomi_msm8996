@@ -1030,7 +1030,7 @@ int f2fs_truncate_inode_blocks(struct inode *inode, pgoff_t from)
 {
 	struct f2fs_sb_info *sbi = F2FS_I_SB(inode);
 	int err = 0, cont = 1;
-	int level, offset[4], noffset[4];
+	int level, offset[4], noffset[4] = {0};
 	unsigned int nofs = 0;
 	struct f2fs_inode *ri;
 	struct dnode_of_data dn;
