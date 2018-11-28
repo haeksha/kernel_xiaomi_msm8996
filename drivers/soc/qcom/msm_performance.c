@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2014-2016, 2019 The Linux Foundation. All rights reserved.
+ * Copyright (c) 2014-2016, The Linux Foundation. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -26,11 +26,11 @@
 #include <linux/input.h>
 #include <linux/kthread.h>
 
+static int touchboost = 0;
 
 #ifndef CONFIG_MSM_PERFORMANCE_CPUFREQ_LIMITS_VOTING_ONLY
 static unsigned int use_input_evts_with_hi_slvt_detect;
 static struct mutex managed_cpus_lock;
-static int touchboost = 1;
 
 /* Maximum number to clusters that this module will manage*/
 static unsigned int num_clusters;
@@ -194,39 +194,12 @@ static struct input_handler *handler;
 
 /**************************sysfs start********************************/
 
-static int set_touchboost(const char *buf, const struct kernel_param *kp)
-{
-	int val;
-
-	if (sscanf(buf, "%d\n", &val) != 1)
-		return -EINVAL;
-
-	touchboost = val;
-
-	return 0;
-}
-
-static int get_touchboost(char *buf, const struct kernel_param *kp)
-{
-	return snprintf(buf, PAGE_SIZE, "%d", touchboost);
-}
-
-static const struct kernel_param_ops param_ops_touchboost = {
-	.set = set_touchboost,
-	.get = get_touchboost,
-};
-device_param_cb(touchboost, &param_ops_touchboost, NULL, 0644);
-
 static int set_num_clusters(const char *buf, const struct kernel_param *kp)
 {
 	unsigned int val;
 
 	if (sscanf(buf, "%u\n", &val) != 1)
 		return -EINVAL;
-
-	if (val == 0)
-		return -EINVAL;
-
 	if (num_clusters)
 		return -EINVAL;
 
@@ -291,7 +264,7 @@ static int get_max_cpus(char *buf, const struct kernel_param *kp)
 {
 	int i, cnt = 0;
 
-	if (!clusters_inited || (num_clusters == 0))
+	if (!clusters_inited)
 		return cnt;
 
 	for (i = 0; i < num_clusters; i++)
@@ -398,6 +371,30 @@ device_param_cb(managed_online_cpus, &param_ops_managed_online_cpus,
 							NULL, 0444);
 #endif
 #endif // CONFIG_MSM_PERFORMANCE_CPUFREQ_LIMITS_VOTING_ONLY
+
+static int set_touchboost(const char *buf, const struct kernel_param *kp)
+{
+	int val;
+
+	if (sscanf(buf, "%d\n", &val) != 1)
+		return -EINVAL;
+
+	touchboost = val;
+
+	return 0;
+}
+
+static int get_touchboost(char *buf, const struct kernel_param *kp)
+{
+	return snprintf(buf, PAGE_SIZE, "%d", touchboost);
+}
+
+static const struct kernel_param_ops param_ops_touchboost = {
+	.set = set_touchboost,
+	.get = get_touchboost,
+};
+device_param_cb(touchboost, &param_ops_touchboost, NULL, 0644);
+
 /*
  * Userspace sends cpu#:min_freq_value to vote for min_freq_value as the new
  * scaling_min. To withdraw its vote it needs to enter cpu#:0
