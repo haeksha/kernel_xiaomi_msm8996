@@ -1,41 +1,40 @@
-#ifndef __TFA_CONFIG_LINUX_KERNEL_INC__
-#define __TFA_CONFIG_LINUX_KERNEL_INC__
+/*
+ * Copyright (C) 2014 NXP Semiconductors, All Rights Reserved.
+ *
+ * This program is free software; you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License version 2 as
+ * published by the Free Software Foundation.
+ *
+ */
+
+#ifndef __TFA98XX_INC__
+#define __TFA98XX_INC__
 
 #include <linux/kernel.h>
 #include <linux/types.h>
-#include <linux/ctype.h>
-#include <linux/delay.h>
-#include <linux/slab.h>
-#include <linux/crc32.h>
-#include <linux/ftrace.h>
-#include <sound/pcm.h>
+#include <linux/list.h>
 
-/*
-	i2c transaction on Linux limited to 64k
-	(See Linux kernel documentation: Documentation/i2c/writing-clients)
-*/
-#define MAX_I2C_BUFFER_SIZE 65536
+#include "tfa_device.h"
+#include "tfa_container.h"
+#include "config.h"
 
 /* max. length of a alsa mixer control name */
 #define MAX_CONTROL_NAME        48
 
-/* dbgprint.h */
-#define PRINT(fmt) "%s: " fmt, __func__
-
-#define _ASSERT(e)
-#define PRINT_ASSERT(e)if ((e)) printk(KERN_ERR "PrintAssert:%s (%s:%d) error code:%d\n", __FUNCTION__, __FILE__, __LINE__, e)
-
 #define TFA98XX_MAX_REGISTER              0xff
 
-#define TFA98XX_FLAG_DSP_START_ON_MUTE	(1 << 0)
-#define TFA98XX_FLAG_SKIP_INTERRUPTS	(1 << 1)
-#define TFA98XX_FLAG_SAAM_AVAILABLE	(1 << 2)
-#define TFA98XX_FLAG_STEREO_DEVICE	(1 << 3)
-#define TFA98XX_FLAG_MULTI_MIC_INPUTS	(1 << 4)
-#define TFA98XX_FLAG_TAPDET_AVAILABLE	(1 << 5)
-#define TFA98XX_FLAG_TFA9890_FAM_DEV	(1 << 6)
+#define TFA98XX_FLAG_SKIP_INTERRUPTS	(1 << 0)
+#define TFA98XX_FLAG_SAAM_AVAILABLE	(1 << 1)
+#define TFA98XX_FLAG_STEREO_DEVICE	(1 << 2)
+#define TFA98XX_FLAG_MULTI_MIC_INPUTS	(1 << 3)
+#define TFA98XX_FLAG_TAPDET_AVAILABLE	(1 << 4)
+#define TFA98XX_FLAG_CALIBRATION_CTL	(1 << 5)
+#define TFA98XX_FLAG_REMOVE_PLOP_NOISE	(1 << 6)
+#define TFA98XX_FLAG_LP_MODES	        (1 << 7)
+#define TFA98XX_FLAG_TDM_DEVICE         (1 << 8)
 
 #define TFA98XX_NUM_RATES		9
+
 /* DSP init status */
 enum tfa98xx_dsp_init_state {
 	TFA98XX_DSP_INIT_STOPPED,	/* DSP not running */
@@ -47,16 +46,16 @@ enum tfa98xx_dsp_init_state {
 };
 
 enum tfa98xx_dsp_fw_state {
-	TFA98XX_DSP_FW_NONE = 0,
-	TFA98XX_DSP_FW_PENDING,
-	TFA98XX_DSP_FW_FAIL,
-	TFA98XX_DSP_FW_OK,
+       TFA98XX_DSP_FW_NONE = 0,
+       TFA98XX_DSP_FW_PENDING,
+       TFA98XX_DSP_FW_FAIL,
+       TFA98XX_DSP_FW_OK,
 };
 
 struct tfa98xx_firmware {
 	void			*base;
 	struct tfa98xx_device	*dev;
-	char			name[9];
+	char			name[9];	//TODO get length from tfa parameter defs
 };
 
 struct tfa98xx_baseprofile {
@@ -66,7 +65,6 @@ struct tfa98xx_baseprofile {
 	int sr_rate_sup[TFA98XX_NUM_RATES]; /* sample rates supported by this profile */
 	struct list_head list;              /* list of all profiles */
 };
-
 
 struct tfa98xx {
 	struct regmap *regmap;
@@ -84,7 +82,6 @@ struct tfa98xx {
 	int sysclk;
 	int rst_gpio;
 	u16 rev;
-	int has_drc;
 	int audio_mode;
 	struct tfa98xx_firmware fw;
 	char *fw_name;
@@ -107,23 +104,21 @@ struct tfa98xx {
 	int power_gpio;
 	int irq_gpio;
 
-	int handle;
+	struct list_head list;
+	struct tfa_device *tfa;
+	int vstep;
+	int profile;
+	int prof_vsteps[TFACONT_MAXPROFS]; /* store vstep per profile (single device) */
 
 #ifdef CONFIG_DEBUG_FS
 	struct dentry *dbg_dir;
 #endif
 	u8 reg;
-
-	unsigned int count_wait_for_source_state;
-	unsigned int count_noclk;
 	unsigned int flags;
+	bool set_mtp_cal;
+	uint16_t cal_data;
 };
 
-#if defined(CONFIG_TRACING) && defined(DEBUG)
-#define tfa98xx_trace_printk(...) trace_printk(__VA_ARGS__)
-#else
-#define tfa98xx_trace_printk(...)
-#endif
 
-#endif /* __CONFIG_LINUX_KERNEL_INC__ */
+#endif /* __TFA98XX_INC__ */
 
