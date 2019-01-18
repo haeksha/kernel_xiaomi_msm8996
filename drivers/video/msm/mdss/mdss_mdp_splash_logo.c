@@ -424,22 +424,23 @@ static int mdss_mdp_splash_kickoff(struct msm_fb_data_type *mfd,
 	ret = mdss_mdp_overlay_start(mfd);
 	if (ret) {
 		pr_err("unable to start overlay %d (%d)\n", mfd->index, ret);
-		goto end;
+		goto end2;
 	}
 
 	mixer = mdss_mdp_mixer_get(mdp5_data->ctl, MDSS_MDP_MIXER_MUX_LEFT);
 	if (!mixer) {
 		pr_err("unable to retrieve mixer\n");
 		ret = -EINVAL;
-		goto end;
+		goto end2;
 	}
 
 	req = kzalloc(sizeof(struct mdp_overlay), GFP_KERNEL);
 	if (!req) {
-	    pr_err("fail allocate memory\n");
-	    ret = -ENOMEM;
-	    goto end;
+		pr_err("fail allocate memory\n");
+		ret = -ENOMEM;
+		goto end2;
 	}
+
 	/*
 	 * use single pipe for
 	 * 1. split display disabled
@@ -510,6 +511,7 @@ static int mdss_mdp_splash_kickoff(struct msm_fb_data_type *mfd,
 	return ret;
 end:
 	kfree(req);
+end2:
 	sinfo->pipe_ndx[0] = INVALID_PIPE_INDEX;
 	sinfo->pipe_ndx[1] = INVALID_PIPE_INDEX;
 	mutex_unlock(&mdp5_data->ov_lock);

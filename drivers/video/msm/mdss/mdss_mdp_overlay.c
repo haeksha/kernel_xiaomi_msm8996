@@ -5449,6 +5449,7 @@ static int __handle_overlay_prepare(struct msm_fb_data_type *mfd,
 			pr_err("src_split_sort failed. ret=%d\n", ret);
 			mutex_unlock(&mdp5_data->ov_lock);
 			kfree(sorted_ovs);
+			mutex_unlock(&mdp5_data->ov_lock);
 			return ret;
 		}
 	}
