@@ -181,7 +181,7 @@ res="${res}${CONFIG_LOCALVERSION}${LOCALVERSION}"
 	# looks at signed or annotated tags - git tag -a/-s) and
 	# LOCALVERSION= is not specified
 	#if test "${LOCALVERSION+set}" != "set"; then
-		scm=$(scm_version --short)
+		scm="+"
 		res="$res$scm"
 	#fi
 #fi
