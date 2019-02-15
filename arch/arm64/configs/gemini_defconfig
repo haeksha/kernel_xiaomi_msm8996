@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/arm64 3.18.133 Kernel Configuration
+# Linux/arm64 3.18.134 Kernel Configuration
 #
 CONFIG_ARM64=y
 CONFIG_64BIT=y
@@ -2742,7 +2742,8 @@ CONFIG_RADIO_ADAPTERS=y
 # Texas Instruments WL128x FM driver (ST based)
 #
 # CONFIG_RADIO_WL128X is not set
-# CONFIG_RADIO_IRIS is not set
+CONFIG_RADIO_IRIS=y
+CONFIG_RADIO_IRIS_TRANSPORT=y
 # CONFIG_RADIO_SILABS is not set
 # CONFIG_CYPRESS_FIRMWARE is not set
 
