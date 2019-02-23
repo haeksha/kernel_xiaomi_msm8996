@@ -33,7 +33,6 @@
 #include <linux/poll.h>
 #include <linux/jiffies.h>
 #include <linux/timer.h>
-#include <linux/wakelock.h>
 
 #define CAPTOUCH_DEV "captouch"
 #define CAPTOUCH_TTW_HOLD_TIME 1000
