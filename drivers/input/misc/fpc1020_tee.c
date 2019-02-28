@@ -23,6 +23,8 @@
 #include <linux/spi/spi.h>
 #include <linux/wakelock.h>
 #include <linux/notifier.h>
+#include <linux/state_notifier.h>
+#include <linux/cpu_input_boost.h>
 
 struct vreg_config {
 	char *name;
@@ -333,6 +335,10 @@ static irqreturn_t fpc1020_irq_handler(int irq, void *dev_id)
 	}
 
 	sysfs_notify(&f->dev->kobj, NULL, dev_attr_irq.attr.name);
+
+        if (state_suspended){
+        cpu_input_boost_kick_max(CONFIG_WAKE_BOOST_DURATION_MS);
+	}
 
 	return IRQ_HANDLED;
 }
