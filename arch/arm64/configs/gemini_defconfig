@@ -1,6 +1,6 @@
 #
 # Automatically generated file; DO NOT EDIT.
-# Linux/arm64 3.18.136 Kernel Configuration
+# Linux/arm64 3.18.138 Kernel Configuration
 #
 CONFIG_ARM64=y
 CONFIG_64BIT=y
@@ -515,6 +515,7 @@ CONFIG_COMPAT=y
 CONFIG_KUSER_HELPERS=y
 CONFIG_COMPAT_VDSO=y
 CONFIG_CROSS_COMPILE_ARM32=""
+CONFIG_KEYS_COMPAT=y
 
 #
 # Power management options
@@ -4260,10 +4261,7 @@ CONFIG_DYNAMIC_DEBUG=y
 #
 # Compile-time checks and compiler options
 #
-CONFIG_DEBUG_INFO=y
-# CONFIG_DEBUG_INFO_REDUCED is not set
-# CONFIG_DEBUG_INFO_SPLIT is not set
-# CONFIG_DEBUG_INFO_DWARF4 is not set
+# CONFIG_DEBUG_INFO is not set
 CONFIG_ENABLE_WARN_DEPRECATED=y
 CONFIG_ENABLE_MUST_CHECK=y
 CONFIG_FRAME_WARN=2048
@@ -4425,7 +4423,6 @@ CONFIG_DEBUG_ALIGN_RODATA=y
 # Security options
 #
 CONFIG_KEYS=y
-CONFIG_KEYS_COMPAT=y
 # CONFIG_PERSISTENT_KEYRINGS is not set
 # CONFIG_BIG_KEYS is not set
 CONFIG_ENCRYPTED_KEYS=y
