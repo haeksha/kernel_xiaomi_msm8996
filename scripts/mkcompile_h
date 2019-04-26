@@ -77,7 +77,7 @@ UTS_TRUNCATE="cut -b -$UTS_LEN"
   echo \#define LINUX_COMPILE_HOST \"`echo $LINUX_COMPILE_HOST | $UTS_TRUNCATE`\"
 
   if [ -z "$KBUILD_COMPILER_STRING" ]; then
-    echo \#define LINUX_COMPILER \"`$CC -v 2>&1 | grep ' version ' | sed 's/[[:space:]]*$//' | sed 's/(https\:\/\/android.googlesource.com\/toolchain\/clang 649b4adfc45b26ae937fe597ef6134d244f89686) (https\:\/\/android.googlesource.com\/toolchain\/llvm 45936e9d187aaac2b7c0245f6f8c10138f6a02e9) //g' `\"
+    echo \#define LINUX_COMPILER \"`$CC -v 2>&1 | grep ' version ' | sed 's/[[:space:]]*$//' | sed "s/(https\:\/\/android.googlesource.com\/toolchain\/clang .*) //" `\"
   else
     echo \#define LINUX_COMPILER \"$KBUILD_COMPILER_STRING\"
   fi;
