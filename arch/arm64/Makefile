@@ -64,12 +64,20 @@ ifeq ($(CONFIG_CPU_BIG_ENDIAN), y)
 KBUILD_CPPFLAGS	+= -mbig-endian
 AS		+= -EB
 LD		+= -EB
+ifeq ($(cc-name),clang)
 LDFLAGS		+= -maarch64linuxb
+else
+UTS_MACHINE	:= aarch64_be
+endif
 else
 KBUILD_CPPFLAGS	+= -mlittle-endian
 AS		+= -EL
 LD		+= -EL
+ifeq ($(cc-name),clang)
 LDFLAGS		+= -maarch64linux
+else
+UTS_MACHINE	:= aarch64
+endif
 endif
 
 CHECKFLAGS	+= -D__aarch64__
