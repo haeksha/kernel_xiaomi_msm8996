@@ -1,0 +1,10 @@
+# https://devcenter.wercker.com/overview-and-core-concepts/containers/ 
+box: ubuntu
+command-timeout: 60
+build:
+ steps:
+  - script:
+    name: compile
+    code: |
+     bash wercker.sh
+
