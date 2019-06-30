@@ -1020,8 +1020,7 @@ static ssize_t oom_score_adj_write(struct file *file, const char __user *buf,
 
 	/* These apps burn through CPU in the background. Don't let them. */
 	if (oom_score_adj >= 700) {
-		if (!strcmp(task->comm, "id.GoogleCamera") ||
-		    !strcmp(task->comm, "ndroid.settings")) {
+		if (!strcmp(task->comm, "ndroid.settings")) {
 			if (task != task_to_kill)
 				flush_work(&task_kill_work);
 			task_to_kill = task;
