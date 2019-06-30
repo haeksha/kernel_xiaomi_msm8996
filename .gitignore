@@ -101,3 +101,4 @@ all.config
 # fetched Android config fragments
 android/configs/android-*.cfg
 changelog.*
+*.diff
