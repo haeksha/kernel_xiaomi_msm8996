@@ -2,7 +2,7 @@ VERSION = 3
 PATCHLEVEL = 18
 SUBLEVEL = 140
 EXTRAVERSION =
-EXTRAVERSION = -Rev-EAS
+EXTRAVERSION = -Super-EAS
 NAME = Diseased Newt
 
 # *DOCUMENTATION*
@@ -404,7 +404,7 @@ KBUILD_CFLAGS := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		-fno-strict-aliasing -fno-common -fshort-wchar \
 		-Werror-implicit-function-declaration \
 		-Wno-format-security \
-		-mcpu=cortex-a57.cortex-a53 -mtune=cortex-a57.cortex-a53 \
+		-march=armv8-a+simd+crypto+crc -mcpu=cortex-a57.cortex-a53 -mtune=cortex-a57.cortex-a53 \
 		-std=gnu89 $(call cc-option,-fno-PIE) $(GCC9WARNINGS)
 
 KBUILD_AFLAGS_KERNEL :=
@@ -870,8 +870,8 @@ ifeq ($(CONFIG_STRIP_ASM_SYMS),y)
 LDFLAGS_vmlinux	+= $(call ld-option, -X,)
 endif
 
-LDFLAGS_vmlinux += $(call ld-option, --fix-cortex-a53-843419)
-LDFLAGS_MODULE += $(call ld-option, --fix-cortex-a53-843419)
+#LDFLAGS_vmlinux += $(call ld-option, --fix-cortex-a53-843419)
+#LDFLAGS_MODULE += $(call ld-option, --fix-cortex-a53-843419)
 
 # Default kernel image to build when no specific target is given.
 # KBUILD_IMAGE may be overruled on the command line or

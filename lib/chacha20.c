@@ -13,7 +13,7 @@
 #include <linux/export.h>
 
 #include <asm/neon.h>
-
+#include <linux/string.h>
 asmlinkage void chacha_block_xor_neon(u32 *state, u8 *dst, const u8 *src, int nrounds);
 
 extern void chacha20_block(u32 *state, void *stream)
