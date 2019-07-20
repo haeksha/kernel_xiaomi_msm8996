@@ -33,7 +33,6 @@
 #include <linux/poll.h>
 #include <linux/jiffies.h>
 #include <linux/timer.h>
-#include <linux/wakelock.h>
 
 #define CAPTOUCH_DEV "captouch"
 #define CAPTOUCH_TTW_HOLD_TIME 1000
@@ -70,7 +69,7 @@ struct captouch_drvdata {
 	bool            homekey_enabled;
 	struct timer_list timer;
 	bool		timer_scheduled;
-	struct wake_lock		ttw_wl;
+	struct wakeup_source		ttw_wl;
 };
 
 struct captouch_drvdata *g_drvdata = NULL;
@@ -360,7 +359,7 @@ bool captouch_get_status(void)
 
 void captouch_key_report(int key_status)
 {
-	wake_lock_timeout(&g_drvdata->ttw_wl, msecs_to_jiffies(CAPTOUCH_TTW_HOLD_TIME));
+	__pm_wakeup_event(&g_drvdata->ttw_wl, CAPTOUCH_TTW_HOLD_TIME);
 
 	if (key_status == 1)
 		g_drvdata->event = CAPTOUCH_TYPE_FINGER_DOWN;
@@ -410,7 +409,7 @@ static int captouch_probe(struct platform_device *pdev)
 
 	captouch_key_report_ptr = captouch_key_report;
 	captouch_get_status_ptr = captouch_get_status;
-	wake_lock_init(&drvdata->ttw_wl, WAKE_LOCK_SUSPEND, "captouch_ttw_wl");
+	wakeup_source_init(&drvdata->ttw_wl, "captouch_ttw_wl");
 
 end:
 	return rc;
