@@ -396,7 +396,7 @@ GCC8WARNINGS	= $(GCC7WARNINGS) -Wno-multistatement-macros -Wno-error=sizeof-poin
 GCC9WARNINGS	= $(GCC8WARNINGS) -Wno-address-of-packed-member -Wno-missing-attributes
 
 ifeq ($(cc-name),clang)
-OPT_FLAGS	:= -Ofast -march=armv8-a+crc -funsafe-math-optimizations -ffast-math
+OPT_FLAGS	:= -Ofast -march=armv8-a+crc -funsafe-math-optimizations
 OPT_FLAGS	+= -mtune=kryo -fvectorize -fslp-vectorize -ftree-vectorize -ftree-slp-vectorize
 else
 OPT_FLAGS	:= -mcpu=cortex-a57.cortex-a53 -mtune=cortex-a57.cortex-a53 $(GCC9WARNINGS)
