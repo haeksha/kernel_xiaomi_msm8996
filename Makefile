@@ -298,8 +298,8 @@ CONFIG_SHELL := $(shell if [ -x "$$BASH" ]; then echo $$BASH; \
 
 HOSTCC       = $(CCACHE) gcc
 HOSTCXX      = $(CCACHE) g++
-HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer -std=gnu89
-HOSTCXXFLAGS = -O2
+HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer -std=gnu89 -pipe
+HOSTCXXFLAGS = -O2 -pipe
 
 # Decide whether to build built-in, modular, or both.
 # Normally, just do built-in.
@@ -399,7 +399,7 @@ ifeq ($(cc-name),clang)
 OPT_FLAGS	:= -Ofast -march=armv8-a+crc -funsafe-math-optimizations
 OPT_FLAGS	+= -mtune=kryo -fvectorize -fslp-vectorize -ftree-vectorize -ftree-slp-vectorize
 else
-OPT_FLAGS	:= -mcpu=cortex-a57.cortex-a53 -mtune=cortex-a57.cortex-a53 $(GCC9WARNINGS)
+OPT_FLAGS	:= -march=armv8-a+simd+crypto+crc -mcpu=cortex-a57.cortex-a53 -mtune=cortex-a57.cortex-a53 $(GCC9WARNINGS)
 endif
 
 KBUILD_CFLAGS := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
