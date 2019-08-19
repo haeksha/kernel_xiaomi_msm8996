@@ -37,6 +37,13 @@ function tmr()
 	echo
 	return $ret
 };
+function mkzip() {
+cd $ANYKERNEL_DIR/
+tmr zip -r9 $FINAL_ZIP * -x *.zip $FINAL_ZIP
+mkdir -p $KERNEL_DIR/../builds
+mv $FINAL_ZIP $KERNEL_DIR/../builds/$FINAL_ZIP
+echo "Your kernel is located in ../builds/$FINAL_ZIP"
+};
 
 if [ $1 ]
 then
@@ -68,13 +75,7 @@ cp $OUTKERNEL_DIR/arch/arm64/boot/Image.gz-dtb $ANYKERNEL_DIR/
     exit
   fi
 }
-
-cd $ANYKERNEL_DIR/
-tmr zip -r9 $FINAL_ZIP * -x *.zip $FINAL_ZIP
-mkdir -p $KERNEL_DIR/../builds
-mv $FINAL_ZIP $KERNEL_DIR/../builds/$FINAL_ZIP
-echo "Your kernel is located in ../builds/$FINAL_ZIP"
-
+mkzip;
 else
 echo "You should specify codename of the your device"
 fi
