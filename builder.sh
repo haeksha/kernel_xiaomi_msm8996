@@ -49,6 +49,7 @@ if [ $1 ]
 then
  
 echo "Building for $1"
+INAME=Image.gz-dtb
 KERNEL_DIR=$PWD
 ANYKERNEL_DIR=$KERNEL_DIR/AnyKernel3
 OUTKERNEL_DIR=$KERNEL_DIR/../out
@@ -62,13 +63,13 @@ if [ -e CRSC.sh ]; then . CRSC.sh; fi
 CCACHE=`which ccache`;
 mkdir -p $OUTKERNEL_DIR;
 tmr make O=$OUTKERNEL_DIR clean mrproper;
-rm -f $ANYKERNEL_DIR/Image.gz-dtb;
+rm -f $ANYKERNEL_DIR/$INAME;
 
 make O=$OUTKERNEL_DIR $1_defconfig;
-tmr /bin/bash -c "(make -j4 -C $KERNEL_DIR O=$OUTKERNEL_DIR CFLAGS_MODULE=\"-fno-pic\" ARCH=arm64 CROSS_COMPILE=\"$CCACHE $CROSS_COMPILE\" CROSS_COMPILE_ARM32=\"$CROSS_COMPILE_ARM32\" Image.gz-dtb)"
+tmr /bin/bash -c "(make -j4 -C $KERNEL_DIR O=$OUTKERNEL_DIR CFLAGS_MODULE=\"-fno-pic\" ARCH=arm64 CROSS_COMPILE=\"$CCACHE $CROSS_COMPILE\" CROSS_COMPILE_ARM32=\"$CROSS_COMPILE_ARM32\" $INAME)"
 
 {
-cp $OUTKERNEL_DIR/arch/arm64/boot/Image.gz-dtb $ANYKERNEL_DIR/
+cp $OUTKERNEL_DIR/arch/arm64/boot/$INAME $ANYKERNEL_DIR/
 } || {
   if [ $? != 0 ]; then
     echo Noooope
