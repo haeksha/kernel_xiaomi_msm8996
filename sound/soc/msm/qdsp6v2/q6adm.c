@@ -1,5 +1,4 @@
 /* Copyright (c) 2012-2019, The Linux Foundation. All rights reserved.
- * Copyright (C) 2018 XiaoMi, Inc.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -2644,6 +2643,11 @@ int adm_open(int port_id, int path, int rate, int channel_mode, int topology,
 		 __func__, port_id, path, rate, channel_mode, perf_mode,
 		 topology);
 
+	if (topology == ADM_COPP_SPEAKER_MONO_PROTECT_TOPO) {
+		bit_width = 24;
+		rate = 48000;
+		pr_debug("%s: SP topology 0x%x is used. \n",  __func__, topology);
+	}
 	/* For DTS EAGLE only, force 24 bit */
 	if ((topology == ADM_CMD_COPP_OPEN_TOPOLOGY_ID_DTS_HPX) &&
 		(perf_mode == LEGACY_PCM_MODE)) {

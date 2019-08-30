@@ -249,7 +249,7 @@ SUBARCH := $(shell uname -m | sed -e s/i.86/x86/ -e s/x86_64/x86/ \
 # "make" in the configured kernel build directory always uses that.
 # Default value for CROSS_COMPILE is not to prefix executables
 # Note: Some architectures assign CROSS_COMPILE in their arch/*/Makefile
-ARCH		?= arm64
+ARCH		?= $(SUBARCH)
 CROSS_COMPILE	?= $(CCACHE) $(CONFIG_CROSS_COMPILE:"%"=%)
 
 # Architecture as present in compile.h
@@ -298,8 +298,8 @@ CONFIG_SHELL := $(shell if [ -x "$$BASH" ]; then echo $$BASH; \
 
 HOSTCC       = $(CCACHE) gcc
 HOSTCXX      = $(CCACHE) g++
-HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer -std=gnu89 -pipe
-HOSTCXXFLAGS = -O2 -pipe
+HOSTCFLAGS   = -Wall -Wmissing-prototypes -Wstrict-prototypes -O2 -fomit-frame-pointer -std=gnu89
+HOSTCXXFLAGS = -O2
 
 # Decide whether to build built-in, modular, or both.
 # Normally, just do built-in.
@@ -395,18 +395,12 @@ GCC7WARNINGS	= $(GCC6WARNINGS) -Wno-int-in-bool-context -Wno-memset-elt-size -Wn
 GCC8WARNINGS	= $(GCC7WARNINGS) -Wno-multistatement-macros -Wno-error=sizeof-pointer-div -Wno-sizeof-pointer-div -Wno-attribute-alias -Wno-stringop-truncation
 GCC9WARNINGS	= $(GCC8WARNINGS) -Wno-address-of-packed-member -Wno-missing-attributes
 
-ifeq ($(cc-name),clang)
-OPT_FLAGS	:= -Ofast -march=armv8-a+crc -funsafe-math-optimizations
-OPT_FLAGS	+= -mtune=kryo -fvectorize -fslp-vectorize -ftree-vectorize -ftree-slp-vectorize
-else
-OPT_FLAGS	:= -march=armv8-a+simd+crypto+crc -mcpu=cortex-a57.cortex-a53 -mtune=cortex-a57.cortex-a53 $(GCC9WARNINGS)
-endif
-
 KBUILD_CFLAGS := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		-fno-strict-aliasing -fno-common -fshort-wchar \
 		-Werror-implicit-function-declaration \
 		-Wno-format-security \
-		-std=gnu89 $(call cc-option,-fno-PIE) $(OPT_FLAGS)
+		-mcpu=cortex-a57.cortex-a53 -mtune=cortex-a57.cortex-a53 \
+		-std=gnu89 $(call cc-option,-fno-PIE) $(GCC9WARNINGS)
 
 KBUILD_AFLAGS_KERNEL :=
 KBUILD_CFLAGS_KERNEL :=

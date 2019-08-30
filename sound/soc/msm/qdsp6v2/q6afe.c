@@ -1,5 +1,4 @@
 /* Copyright (c) 2012-2019, The Linux Foundation. All rights reserved.
- * Copyright (C) 2018 XiaoMi, Inc.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -356,7 +355,7 @@ static int32_t afe_callback(struct apr_client_data *data, void *priv)
 		if (data->payload != NULL)
 			process_us_payload(data->payload);
 		else
-			pr_err("%s: payload == NULL !\n", __func__);
+                        pr_err("%s: payload == NULL !\n", __func__);
 	} else if (data->payload_size) {
 		uint32_t *payload;
 		uint16_t port_id = 0;

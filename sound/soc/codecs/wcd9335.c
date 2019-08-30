@@ -13919,7 +13919,7 @@ static struct kobj_attribute headphone_pa_gain_attribute =
 		headphone_pa_gain_store);
 
 struct snd_soc_codec *tfa98xx_codec_ptr;
-#include "tfa98xx/tfa9891_genregs.h"
+#define TFA98XX_AUDIO_CTR                  0x06
 #define TO_FIXED(e) e
 static ssize_t speaker_gain_show(struct kobject *kobj,
 		struct kobj_attribute *attr, char *buf)
@@ -14249,7 +14249,7 @@ static int tasha_codec_probe(struct snd_soc_codec *codec)
 #endif
 
 	/* ASUS_BSP Paul +++ */
-    if (!g_audiowizard_force_preset_sdev) {
+        if (!g_audiowizard_force_preset_sdev) {
 		g_audiowizard_force_preset_sdev = kzalloc(sizeof(struct switch_dev), GFP_KERNEL);
 		if (!g_audiowizard_force_preset_sdev) {
 			pr_err("%s: failed to allocate switch_dev\n", __func__);

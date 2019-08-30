@@ -49,8 +49,8 @@ enum tfa_fw_event { /* not all available on each device */
 #define MODULE_FRAMEWORK        0
 #define MODULE_SPEAKERBOOST     1
 #define MODULE_BIQUADFILTERBANK 2
-#define MODULE_TAPTRIGGER       5
-#define MODULE_SETRE            9
+#define MODULE_TAPTRIGGER		5
+#define MODULE_SETRE 			9
 
 /* RPC commands */
 /* SET */
@@ -62,7 +62,7 @@ enum tfa_fw_event { /* not all available on each device */
 #define FW_PAR_ID_SET_PROGRAM_CONFIG    0x09
 #define FW_PAR_ID_SET_GAINS             0x0A
 #define FW_PAR_ID_SET_MEMTRACK          0x0B
-#define FW_PAR_ID_SET_FWKUSECASE        0x11
+#define FW_PAR_ID_SET_FWKUSECASE		0x11
 #define TFA1_FW_PAR_ID_SET_CURRENT_DELAY 0x03
 #define TFA1_FW_PAR_ID_SET_CURFRAC_DELAY 0x06
 /* GET */
@@ -71,48 +71,48 @@ enum tfa_fw_event { /* not all available on each device */
 #define FW_PAR_ID_GET_FEATURE_INFO      0x85
 #define FW_PAR_ID_GET_MEMTRACK          0x8B
 #define FW_PAR_ID_GET_TAG               0xFF
-#define FW_PAR_ID_GET_API_VERSION       0xFE
-#define FW_PAR_ID_GET_STATUS_CHANGE     0x8D
+#define FW_PAR_ID_GET_API_VERSION 		0xFE
+#define FW_PAR_ID_GET_STATUS_CHANGE		0x8D
 
 /* Load a full model into SpeakerBoost. */
 /* SET */
 #define SB_PARAM_SET_ALGO_PARAMS        0x00
 #define SB_PARAM_SET_LAGW               0x01
 #define SB_PARAM_SET_ALGO_PARAMS_WITHOUT_RESET 0x02
-#define SB_PARAM_SET_RE25C              0x05
+#define SB_PARAM_SET_RE25C				0x05
 #define SB_PARAM_SET_LSMODEL            0x06
 #define SB_PARAM_SET_MBDRC              0x07
-#define SB_PARAM_SET_MBDRC_WITHOUT_RESET       0x08
-#define SB_PARAM_SET_EXCURSION_FILTERS  0x0A
+#define SB_PARAM_SET_MBDRC_WITHOUT_RESET 0x08
+#define SB_PARAM_SET_EXCURSION_FILTERS	0x0A
 #define SB_PARAM_SET_DRC                0x0F
 /* GET */
 #define SB_PARAM_GET_ALGO_PARAMS        0x80
 #define SB_PARAM_GET_LAGW               0x81
 #define SB_PARAM_GET_RE25C              0x85
 #define SB_PARAM_GET_LSMODEL            0x86
-#define SB_PARAM_GET_MBDRC              0x87
-#define SB_PARAM_GET_MBDRC_DYNAMICS     0x89
-#define SB_PARAM_GET_EXCURSION_FILTERS  0x8A
+#define SB_PARAM_GET_MBDRC				0x87
+#define SB_PARAM_GET_MBDRC_DYNAMICS		0x89
+#define SB_PARAM_GET_EXCURSION_FILTERS	0x8A
 #define SB_PARAM_GET_TAG                0xFF
 
-#define SB_PARAM_SET_EQ                 0x0A    /* 2 Equaliser Filters. */
-#define SB_PARAM_SET_PRESET             0x0D    /* Load a preset */
-#define SB_PARAM_SET_CONFIG             0x0E    /* Load a config */
+#define SB_PARAM_SET_EQ					0x0A	/* 2 Equaliser Filters. */
+#define SB_PARAM_SET_PRESET             0x0D	/* Load a preset */
+#define SB_PARAM_SET_CONFIG				0x0E	/* Load a config */
 #define SB_PARAM_SET_AGCINS             0x10
 #define SB_PARAM_SET_CURRENT_DELAY      0x03
 #define SB_PARAM_GET_STATE              0xC0
-#define SB_PARAM_GET_XMODEL             0xC1    /* Gets current Excursion Model. */
+#define SB_PARAM_GET_XMODEL             0xC1	/* Gets current Excursion Model. */
 #define SB_PARAM_GET_XMODEL_COEFFS      0x8C    /* Get coefficients for XModel */
 #define SB_PARAM_GET_EXCURSION_FILTERS  0x8A    /* Get excursion filters */
 #define SB_PARAM_SET_EXCURSION_FILTERS  0x0A    /* Set excursion filters */
 
-/* SET: TAPTRIGGER */
-#define TAP_PARAM_SET_ALGO_PARAMS       0x01
+/*	SET: TAPTRIGGER */
+#define TAP_PARAM_SET_ALGO_PARAMS		0x01
 #define TAP_PARAM_SET_DECIMATION_PARAMS 0x02
 
 /* GET: TAPTRIGGER*/
-#define TAP_PARAM_GET_ALGO_PARAMS       0x81
-#define TAP_PARAM_GET_TAP_RESULTS       0x84
+#define TAP_PARAM_GET_ALGO_PARAMS		0x81
+#define TAP_PARAM_GET_TAP_RESULTS		0x84
 
 /* sets the speaker calibration impedance (@25 degrees celsius) */
 #define SB_PARAM_SET_RE0                0x89
@@ -122,8 +122,8 @@ enum tfa_fw_event { /* not all available on each device */
 #define BFB_PAR_ID_GET_CONFIG           0x81
 
 /* for compatibility */
-#define FW_PARAM_GET_STATE              FW_PAR_ID_GLOBAL_GET_INFO
-#define FW_PARAM_GET_FEATURE_BITS       FW_PAR_ID_GET_FEATURE_BITS
+#define FW_PARAM_GET_STATE        	FW_PAR_ID_GLOBAL_GET_INFO
+#define FW_PARAM_GET_FEATURE_BITS 	FW_PAR_ID_GET_FEATURE_BITS
 
 /* RPC Status results */
 #define STATUS_OK                  0
@@ -142,18 +142,18 @@ enum tfa_fw_event { /* not all available on each device */
 #define FEATURE1_DRC   0x200 /* bit9 NOT set means DRC expected */
 
 /* DSP firmware xmem defines */
-#define TFA1_FW_XMEM_CALIBRATION_DONE   231
+#define TFA1_FW_XMEM_CALIBRATION_DONE	231
 #define TFA2_FW_XMEM_CALIBRATION_DONE   516
-#define TFA1_FW_XMEM_COUNT_BOOT         0xa1
-#define TFA2_FW_XMEM_COUNT_BOOT         512
-#define TFA2_FW_XMEM_CMD_COUNT          520
+#define TFA1_FW_XMEM_COUNT_BOOT			0xa1
+#define TFA2_FW_XMEM_COUNT_BOOT			512
+#define TFA2_FW_XMEM_CMD_COUNT			520
 
 /* note that the following defs rely on the handle variable */
-#define TFA_FW_XMEM_CALIBRATION_DONE    TFA_FAM_FW(tfa,XMEM_CALIBRATION_DONE)
-#define TFA_FW_XMEM_COUNT_BOOT          TFA_FAM_FW(tfa,XMEM_COUNT_BOOT)
-#define TFA_FW_XMEM_CMD_COUNT           TFA_FAM_FW(tfa,XMEM_CMD_COUNT)
+#define TFA_FW_XMEM_CALIBRATION_DONE 	TFA_FAM_FW(tfa,XMEM_CALIBRATION_DONE)
+#define TFA_FW_XMEM_COUNT_BOOT 			TFA_FAM_FW(tfa,XMEM_COUNT_BOOT)
+#define TFA_FW_XMEM_CMD_COUNT 			TFA_FAM_FW(tfa,XMEM_CMD_COUNT)
 
-#define TFA2_FW_ReZ_SCALE    65536
-#define TFA1_FW_ReZ_SCALE    16384
+#define TFA2_FW_ReZ_SCALE	65536
+#define TFA1_FW_ReZ_SCALE	16384
 
 #endif /* TFA98XX_INTERNALS_H */
